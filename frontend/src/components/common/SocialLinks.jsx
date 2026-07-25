@@ -1,5 +1,3 @@
-import { socialLinks } from '../../data/navigation'
-
 const iconMap = {
   GitHub: (
     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -23,19 +21,34 @@ const iconMap = {
   ),
 }
 
-export default function SocialLinks({ size = 'md', className = '' }) {
+const linkConfig = [
+  { label: 'GitHub', key: 'github_url' },
+  { label: 'LinkedIn', key: 'linkedin_url' },
+  { label: 'Twitter', key: 'twitter_url' },
+  { label: 'Email', key: 'email' },
+]
+
+function resolveHref(label, hero) {
+  if (!hero) return '#'
+  if (label === 'Email') return `mailto:${hero.email}`
+  return hero[linkConfig.find((c) => c.label === label).key] || '#'
+}
+
+export default function SocialLinks({ size = 'md', className = '', hero }) {
   const sizeClasses = size === 'sm' ? 'w-9 h-9' : 'w-10 h-10'
 
   return (
     <div className={`flex gap-2 ${className}`}>
-      {socialLinks.map((link) => (
+      {linkConfig.map(({ label }) => (
         <a
-          key={link.label}
-          href={link.href}
+          key={label}
+          href={resolveHref(label, hero)}
+          target="_blank"
+          rel="noopener noreferrer"
           className={`${sizeClasses} brutal-border bg-white flex items-center justify-center hover:bg-gray-100 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]`}
-          aria-label={link.label}
+          aria-label={label}
         >
-          {iconMap[link.label]}
+          {iconMap[label]}
         </a>
       ))}
     </div>

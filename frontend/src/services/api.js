@@ -1,17 +1,12 @@
-/* eslint-disable no-unused-vars */
-const api = {
-  get: async (endpoint) => {
-    throw new Error('API not yet connected to backend')
-  },
-  post: async (endpoint, data) => {
-    throw new Error('API not yet connected to backend')
-  },
-  put: async (endpoint, data) => {
-    throw new Error('API not yet connected to backend')
-  },
-  delete: async (endpoint) => {
-    throw new Error('API not yet connected to backend')
-  },
+import axios from 'axios'
+
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+})
+
+export const getHero = async () => {
+  const response = await api.get('/hero/')
+  return response.data
 }
 
 export default api
