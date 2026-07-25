@@ -1,0 +1,32 @@
+export const projects = [
+  {
+    id: 1,
+    title: 'Weatherly',
+    slug: 'weatherly',
+    description: 'A weather app with real-time data, beautiful charts and forecasts.',
+    image: null,
+    tags: ['React', 'TypeScript', 'API'],
+    gradient: 'bg-brutal-pink',
+    details: 'Full-featured weather application with real-time data visualization, 7-day forecasts, and interactive charts.',
+  },
+  {
+    id: 2,
+    title: 'TaskFlow',
+    slug: 'taskflow',
+    description: 'A project management tool with kanban boards and team collaboration.',
+    image: null,
+    tags: ['React', 'Node.js', 'MongoDB'],
+    gradient: 'bg-brutal-blue',
+    details: 'Kanban-style project management with real-time collaboration, drag-and-drop, and team workspaces.',
+  },
+  {
+    id: 3,
+    title: 'CodeSnippets',
+    slug: 'code-snippets',
+    description: 'A code snippet manager with syntax highlighting and sharing.',
+    image: null,
+    tags: ['React', 'TypeScript', 'Tailwind'],
+    gradient: 'bg-brutal-yellow',
+    details: 'Save, organize, and share code snippets with syntax highlighting and markdown support.',
+  },
+]
