@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react'
 import SocialLinks from '../../components/common/SocialLinks'
 import Button from '../../components/common/Button'
 import { getHero } from '../../services/api'
+import { useSiteSettings } from '../../hooks/useSiteSettings'
 import CodePanel from './CodePanel'
 
 export default function HeroSection() {
+  const { settings } = useSiteSettings()
   const [hero, setHero] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -76,7 +78,7 @@ export default function HeroSection() {
             VIEW MY WORK ↗
           </Button>
           <a
-            href={hero.resume}
+            href={settings?.resume || hero.resume}
             download
             className="brutal-btn bg-white shadow-brutal w-full sm:w-auto justify-center sm:justify-start"
           >
@@ -85,7 +87,7 @@ export default function HeroSection() {
         </div>
         <div className="flex flex-col gap-1 md:gap-2 items-center sm:items-start">
           <span className="text-[10px] font-bold uppercase tracking-widest">Connect with me</span>
-          <SocialLinks className="justify-center sm:justify-start" hero={hero} />
+          <SocialLinks className="justify-center sm:justify-start" hero={hero} settings={settings} />
         </div>
       </section>
       <section className="lg:col-span-5 bg-brutal-pink p-5 md:p-7 flex items-center justify-center relative overflow-hidden min-h-0 order-2">

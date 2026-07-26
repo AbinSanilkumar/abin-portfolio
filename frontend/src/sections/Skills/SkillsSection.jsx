@@ -1,4 +1,6 @@
-import { skills } from '../../data/skills'
+import { useEffect, useState } from 'react'
+
+import { getSkills } from '../../services/api'
 
 const iconMap = {
   React: (
@@ -30,6 +32,25 @@ const iconMap = {
 }
 
 export default function SkillsSection() {
+  const [skills, setSkills] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    let mounted = true
+    getSkills()
+      .then((data) => {
+        if (mounted) setSkills(data)
+      })
+      .catch((err) => {
+        if (mounted) setError(err.message)
+      })
+      .finally(() => {
+        if (mounted) setLoading(false)
+      })
+    return () => { mounted = false }
+  }, [])
+
   return (
     <section className="brutal-border border-x-0 flex flex-col lg:flex-row divide-y-3 lg:divide-y-0 lg:divide-x-3 divide-black overflow-hidden min-h-0 shrink-0">
       <div className="bg-brutal-purple text-white px-6 py-4 font-bold flex flex-row lg:flex-col justify-between items-center lg:items-start min-w-0 lg:min-w-[150px]">
@@ -37,10 +58,28 @@ export default function SkillsSection() {
         <div className="text-3xl">→</div>
       </div>
       <div className="flex-grow skills-grid items-center justify-around px-6 py-4 gap-4 lg:gap-6 overflow-x-auto bg-white">
-        {skills.map((skill) => (
+        {loading && (
+          <div className="flex gap-4 lg:gap-6 items-center animate-pulse">
+            {[1, 2, 3, 4, 5, 6].map((n) => (
+              <div key={n} className="flex flex-col items-center gap-2">
+                <div className="w-10 h-10 bg-gray-200 brutal-border" />
+                <div className="w-14 h-3 bg-gray-200 brutal-border" />
+              </div>
+            ))}
+          </div>
+        )}
+        {error && (
+          <div className="text-[10px] font-bold text-red-600 bg-red-100 brutal-border px-3 py-2">
+            Failed to load skills
+          </div>
+        )}
+        {!loading && !error && skills.length === 0 && (
+          <span className="text-[10px] font-bold text-gray-400 uppercase">No skills listed yet</span>
+        )}
+        {!loading && !error && skills.map((skill) => (
           <div key={skill.id} className="flex flex-col items-center gap-2 group">
             <div className="w-10 h-10 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all">
-              {iconMap[skill.name]}
+              {iconMap[skill.icon_name]}
             </div>
             <span className="text-[10px] font-bold uppercase text-center">{skill.name}</span>
           </div>

@@ -28,13 +28,16 @@ const linkConfig = [
   { label: 'Email', key: 'email' },
 ]
 
-function resolveHref(label, hero) {
-  if (!hero) return '#'
-  if (label === 'Email') return `mailto:${hero.email}`
-  return hero[linkConfig.find((c) => c.label === label).key] || '#'
+function resolveHref(label, hero, settings) {
+  if (label === 'Email') {
+    const email = settings?.primary_email || hero?.email
+    return email ? `mailto:${email}` : '#'
+  }
+  const key = linkConfig.find((c) => c.label === label).key
+  return settings?.[key] || hero?.[key] || '#'
 }
 
-export default function SocialLinks({ size = 'md', className = '', hero }) {
+export default function SocialLinks({ size = 'md', className = '', hero, settings }) {
   const sizeClasses = size === 'sm' ? 'w-9 h-9' : 'w-10 h-10'
 
   return (
@@ -42,7 +45,7 @@ export default function SocialLinks({ size = 'md', className = '', hero }) {
       {linkConfig.map(({ label }) => (
         <a
           key={label}
-          href={resolveHref(label, hero)}
+          href={resolveHref(label, hero, settings)}
           target="_blank"
           rel="noopener noreferrer"
           className={`${sizeClasses} brutal-border bg-white flex items-center justify-center hover:bg-gray-100 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]`}

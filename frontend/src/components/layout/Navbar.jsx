@@ -1,15 +1,21 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { navLinks } from '../../data/navigation'
+import { useSiteSettings } from '../../hooks/useSiteSettings'
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const { settings } = useSiteSettings()
+  const brand = settings?.site_name || 'ABIN DEV'
 
   return (
     <header className="brutal-border border-t-0 border-x-0 flex flex-col lg:flex-row items-stretch overflow-hidden sticky top-0 z-50 bg-white shrink-0">
       <div className="flex items-stretch justify-between lg:hidden">
-        <div className="bg-brutal-lime brutal-border border-y-0 border-l-0 px-6 py-4 font-bold text-lg flex items-center shrink-0">
-          &lt;/&gt; ABIN DEV
+        <div className="bg-brutal-lime brutal-border border-y-0 border-l-0 px-6 py-4 font-bold text-lg flex items-center shrink-0 gap-2">
+          {settings?.logo ? (
+            <img src={settings.logo} alt={brand} className="h-6" />
+          ) : null}
+          &lt;/&gt; {brand}
         </div>
         <button
           className="lg:hidden px-4 py-4 brutal-border border-y-0 border-r-0 hover:bg-gray-100"
@@ -24,8 +30,11 @@ export default function Navbar() {
         </button>
       </div>
       <nav className={`${menuOpen ? 'flex' : 'hidden'} lg:flex flex-col lg:flex-row flex-grow border-t-3 lg:border-t-0 border-black`}>
-        <div className="hidden lg:flex bg-brutal-lime brutal-border border-y-0 border-l-0 px-6 py-4 font-bold text-lg items-center shrink-0">
-          &lt;/&gt; ABIN DEV
+        <div className="hidden lg:flex bg-brutal-lime brutal-border border-y-0 border-l-0 px-6 py-4 font-bold text-lg items-center shrink-0 gap-2">
+          {settings?.logo ? (
+            <img src={settings.logo} alt={brand} className="h-6" />
+          ) : null}
+          &lt;/&gt; {brand}
         </div>
         <ul className="flex flex-col lg:flex-row text-xs font-bold uppercase tracking-wider overflow-x-auto whitespace-nowrap items-stretch flex-grow lg:justify-center">
           {navLinks.map((link) => (

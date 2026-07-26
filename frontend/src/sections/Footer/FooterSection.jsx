@@ -1,4 +1,4 @@
-import { socialLinks } from '../../data/navigation'
+import { useSiteSettings } from '../../hooks/useSiteSettings'
 
 const iconMap = {
   GitHub: (
@@ -23,24 +23,45 @@ const iconMap = {
   ),
 }
 
+const footerLinks = [
+  { label: 'GitHub', key: 'github_url' },
+  { label: 'LinkedIn', key: 'linkedin_url' },
+  { label: 'Twitter', key: 'twitter_url' },
+  { label: 'Email', key: 'primary_email' },
+]
+
+function footerHref(label, settings) {
+  if (!settings) return '#'
+  if (label === 'Email') return settings.primary_email ? `mailto:${settings.primary_email}` : '#'
+  return settings[footerLinks.find((f) => f.label === label).key] || '#'
+}
+
 export default function FooterSection() {
+  const { settings } = useSiteSettings()
+  const brand = settings?.site_name || 'ABIN DEV'
+
   return (
     <footer className="flex flex-col sm:flex-row items-stretch border-t-3 border-black bg-white mt-auto footer-stack">
-      <div className="bg-brutal-lime brutal-border border-y-0 border-l-0 px-6 py-4 font-bold text-sm flex items-center justify-center sm:justify-start">
-        &lt;/&gt; ABIN DEV
+      <div className="bg-brutal-lime brutal-border border-y-0 border-l-0 px-6 py-4 font-bold text-sm flex items-center justify-center sm:justify-start gap-2">
+        {settings?.logo ? (
+          <img src={settings.logo} alt={brand} className="h-5" />
+        ) : null}
+        &lt;/&gt; {brand}
       </div>
       <div className="flex-grow flex items-center justify-center p-3 sm:p-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest text-center">
-        &copy; 2026 Abin Dev. All rights reserved.
+        {settings?.copyright_text || `© ${new Date().getFullYear()} ${brand}. All rights reserved.`}
       </div>
       <div className="flex divide-x-3 divide-black sm:border-l-3 border-black bg-white justify-center sm:justify-start">
-        {socialLinks.map((link) => (
+        {footerLinks.map(({ label }) => (
           <a
-            key={link.label}
-            href={link.href}
+            key={label}
+            href={footerHref(label, settings)}
+            target="_blank"
+            rel="noopener noreferrer"
             className="p-4 hover:bg-gray-100"
-            aria-label={link.label}
+            aria-label={label}
           >
-            {iconMap[link.label]}
+            {iconMap[label]}
           </a>
         ))}
       </div>
