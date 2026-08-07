@@ -9,7 +9,7 @@ export default function CodePanel() {
       <div className="text-[10px] font-mono text-white leading-relaxed">
         <span className="text-brutal-lime">&gt; const developer = {'{'}</span>
         <br />
-        <span className="pl-4">code: 'TypeScript',</span>
+        <span className="pl-4">code: 'Python',</span>
         <br />
         <span className="pl-4">build: 'React',</span>
         <br />

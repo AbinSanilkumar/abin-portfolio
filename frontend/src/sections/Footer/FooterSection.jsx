@@ -41,7 +41,7 @@ export default function FooterSection() {
   const brand = settings?.site_name || 'ABIN DEV'
 
   return (
-    <footer className="flex flex-col sm:flex-row items-stretch border-t-3 border-black bg-white mt-auto footer-stack">
+    <footer id="contact" className="flex flex-col sm:flex-row items-stretch border-t-3 border-black bg-white mt-auto footer-stack">
       <div className="bg-brutal-lime brutal-border border-y-0 border-l-0 px-6 py-4 font-bold text-sm flex items-center justify-center sm:justify-start gap-2">
         {settings?.logo ? (
           <img src={settings.logo} alt={brand} className="h-5" />

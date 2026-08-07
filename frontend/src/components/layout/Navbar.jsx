@@ -1,12 +1,23 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { navLinks } from '../../data/navigation'
 import { useSiteSettings } from '../../hooks/useSiteSettings'
 
-export default function Navbar() {
+export default function Navbar({ onNavigate }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const { settings } = useSiteSettings()
   const brand = settings?.site_name || 'ABIN DEV'
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const handleNavigate = (page) => {
+    setMenuOpen(false)
+    if (onNavigate) {
+      onNavigate(page)
+    } else if (location.pathname !== '/') {
+      navigate('/', { state: { scrollTo: page } })
+    }
+  }
 
   return (
     <header className="brutal-border border-t-0 border-x-0 flex flex-col lg:flex-row items-stretch overflow-hidden sticky top-0 z-50 bg-white shrink-0">
@@ -39,7 +50,15 @@ export default function Navbar() {
         <ul className="flex flex-col lg:flex-row text-xs font-bold uppercase tracking-wider overflow-x-auto whitespace-nowrap items-stretch flex-grow lg:justify-center">
           {navLinks.map((link) => (
             <li key={link.label} className="border-b-3 lg:border-b-0 border-black last:border-b-0 shrink-0">
-              {link.href.startsWith('/') ? (
+              {'page' in link ? (
+                <button
+                  type="button"
+                  onClick={() => handleNavigate(link.page)}
+                  className="px-4 py-4 hover:bg-gray-100 cursor-pointer block"
+                >
+                  {link.label}
+                </button>
+              ) : (
                 <Link
                   to={link.href}
                   className="px-4 py-4 hover:bg-gray-100 cursor-pointer block"
@@ -47,14 +66,6 @@ export default function Navbar() {
                 >
                   {link.label}
                 </Link>
-              ) : (
-                <a
-                  href={link.href}
-                  className="px-4 py-4 hover:bg-gray-100 cursor-pointer block"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {link.label}
-                </a>
               )}
             </li>
           ))}

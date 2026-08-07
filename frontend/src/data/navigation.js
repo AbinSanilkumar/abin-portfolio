@@ -1,8 +1,8 @@
 export const navLinks = [
-  { label: 'Skills', href: '#skills' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Certifications', href: '#certifications' },
+  { label: 'Skills', page: 1 },
+  { label: 'Projects', page: 2 },
+  { label: 'Experience', page: 3 },
+  { label: 'Certifications', page: 2 },
   { label: 'Blog', href: '/blog' },
 ]
 

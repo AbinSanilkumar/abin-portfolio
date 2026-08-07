@@ -9,7 +9,6 @@ export default function ProjectCard({ project, index = 0 }) {
     <div className="brutal-border bg-white shadow-brutal-lg flex flex-col max-w-full">
       <div className={`${gradient} p-3 md:p-5 brutal-border border-t-0 border-x-0 flex relative`}>
         <div className="brutal-border bg-white flex flex-col p-4 relative w-full">
-          <div className="absolute top-4 left-4 w-6 h-6 bg-brutal-yellow rounded-full brutal-border" />
           <div className="flex items-center justify-center">
             {project.image ? (
               <img
@@ -24,7 +23,6 @@ export default function ProjectCard({ project, index = 0 }) {
               </svg>
             )}
           </div>
-          <div className="absolute bottom-4 right-4 font-black text-5xl md:text-6xl italic tracking-tighter">24°C</div>
         </div>
       </div>
       <div className="p-4 md:p-5">
